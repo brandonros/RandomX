@@ -73,7 +73,7 @@ extern "C" {
 			return cache;
 		}
 
-		try {
+		//try {
 			cache = new randomx_cache();
 			cache->argonImpl = impl;
 			switch ((int)(flags & (RANDOMX_FLAG_JIT | RANDOMX_FLAG_LARGE_PAGES))) {
@@ -112,13 +112,13 @@ extern "C" {
 				default:
 					UNREACHABLE;
 			}
-		}
-		catch (std::exception &ex) {
+		//}
+		/*catch (std::exception &ex) {
 			if (cache != nullptr) {
 				randomx_release_cache(cache);
 				cache = nullptr;
 			}
-		}
+		}*/
 		if (cache && cache->memory == nullptr) {
 			randomx_release_cache(cache);
 			cache = nullptr;
@@ -153,7 +153,7 @@ extern "C" {
 
 		randomx_dataset *dataset = nullptr;
 
-		try {
+		//try {
 			dataset = new randomx_dataset();
 			if (flags & RANDOMX_FLAG_LARGE_PAGES) {
 				dataset->dealloc = &randomx::deallocDataset<randomx::LargePageAllocator>;
@@ -163,13 +163,13 @@ extern "C" {
 				dataset->dealloc = &randomx::deallocDataset<randomx::DefaultAllocator>;
 				dataset->memory = (uint8_t*)randomx::DefaultAllocator::allocMemory(randomx::DatasetSize);
 			}
-		}
-		catch (std::exception &ex) {
+		//}
+		/*catch (std::exception &ex) {
 			if (dataset != nullptr) {
 				randomx_release_dataset(dataset);
 				dataset = nullptr;
 			}
-		}
+		}*/
 		if (dataset && dataset->memory == nullptr) {
 			randomx_release_dataset(dataset);
 			dataset = nullptr;
@@ -210,7 +210,7 @@ extern "C" {
 
 		randomx_vm *vm = nullptr;
 
-		try {
+		//try {
 			switch ((int)(flags & (RANDOMX_FLAG_FULL_MEM | RANDOMX_FLAG_JIT | RANDOMX_FLAG_HARD_AES | RANDOMX_FLAG_LARGE_PAGES))) {
 				case RANDOMX_FLAG_DEFAULT:
 					vm = new randomx::InterpretedLightVmDefault();
@@ -329,11 +329,11 @@ extern "C" {
 				vm->setDataset(dataset);
 
 			vm->allocate();
-		}
-		catch (std::exception &ex) {
+		//}
+		/*catch (std::exception &ex) {
 			delete vm;
 			vm = nullptr;
-		}
+		}*/
 
 		return vm;
 	}

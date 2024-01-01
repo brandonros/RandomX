@@ -38,7 +38,7 @@ namespace randomx {
 	void* AlignedAllocator<alignment>::allocMemory(size_t count) {
 		void *mem = rx_aligned_alloc(count, alignment);
 		if (mem == nullptr)
-			throw std::bad_alloc();
+			//throw std::bad_alloc();
 		return mem;
 	}
 
@@ -52,7 +52,7 @@ namespace randomx {
 	void* LargePageAllocator::allocMemory(size_t count) {
 		void *mem = allocLargePagesMemory(count);
 		if (mem == nullptr)
-			throw std::bad_alloc();
+			//throw std::bad_alloc();
 		return mem;
 	}
 

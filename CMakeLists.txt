@@ -173,6 +173,12 @@ if(ARM_ID STREQUAL "aarch64" OR ARM_ID STREQUAL "arm64" OR ARM_ID STREQUAL "armv
   endif()
 endif()
 
+# ARM
+if(ARM_ID STREQUAL "arm")
+  add_flag("-ffat-lto-objects")
+  message("TODO: arm")
+endif()
+
 # RISC-V
 if(ARCH_ID STREQUAL "riscv64")
   list(APPEND randomx_sources
@@ -211,7 +217,7 @@ endif()
 
 set(RANDOMX_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/src" CACHE STRING "RandomX Include path")
 
-add_library(randomx ${randomx_sources})
+add_library(randomx STATIC ${randomx_sources})
 
 if(TARGET generate-asm)
   add_dependencies(randomx generate-asm)
@@ -228,32 +234,32 @@ install(TARGETS randomx
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
   PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
-add_executable(randomx-tests
-  src/tests/tests.cpp)
-target_link_libraries(randomx-tests
-  PRIVATE randomx)
-set_property(TARGET randomx-tests PROPERTY POSITION_INDEPENDENT_CODE ON)
-set_property(TARGET randomx-tests PROPERTY CXX_STANDARD 11)
+#add_executable(randomx-tests
+#  src/tests/tests.cpp)
+#target_link_libraries(randomx-tests
+#  PRIVATE randomx)
+#set_property(TARGET randomx-tests PROPERTY POSITION_INDEPENDENT_CODE ON)
+#set_property(TARGET randomx-tests PROPERTY CXX_STANDARD 11)
 
-add_executable(randomx-codegen
-  src/tests/code-generator.cpp)
-target_link_libraries(randomx-codegen
-  PRIVATE randomx)
+#add_executable(randomx-codegen
+#  src/tests/code-generator.cpp)
+#target_link_libraries(randomx-codegen
+#  PRIVATE randomx)
 
-set_property(TARGET randomx-codegen PROPERTY POSITION_INDEPENDENT_CODE ON)
-set_property(TARGET randomx-codegen PROPERTY CXX_STANDARD 11)
+#set_property(TARGET randomx-codegen PROPERTY POSITION_INDEPENDENT_CODE ON)
+#set_property(TARGET randomx-codegen PROPERTY CXX_STANDARD 11)
 
 if(NOT Threads_FOUND AND UNIX AND NOT APPLE)
   set(THREADS_PREFER_PTHREAD_FLAG ON)
   find_package(Threads)
 endif()
 
-add_executable(randomx-benchmark
-  src/tests/benchmark.cpp
-  src/tests/affinity.cpp)
-target_link_libraries(randomx-benchmark
-  PRIVATE randomx
-  PRIVATE ${CMAKE_THREAD_LIBS_INIT})
+#add_executable(randomx-benchmark
+#  src/tests/benchmark.cpp
+#  src/tests/affinity.cpp)
+#target_link_libraries(randomx-benchmark
+#  PRIVATE randomx
+#  PRIVATE ${CMAKE_THREAD_LIBS_INIT})
 
 include(CheckCXXSourceCompiles)
 check_cxx_source_compiles("
@@ -264,9 +270,11 @@ int main() {
   a.is_lock_free();
 }" HAVE_CXX_ATOMICS)
 
-if(NOT HAVE_CXX_ATOMICS)
-  target_link_libraries(randomx-benchmark
-    PRIVATE "atomic")
-endif()
-set_property(TARGET randomx-benchmark PROPERTY POSITION_INDEPENDENT_CODE ON)
-set_property(TARGET randomx-benchmark PROPERTY CXX_STANDARD 11)
+#if(NOT HAVE_CXX_ATOMICS)
+#  target_link_libraries(randomx-benchmark
+#    PRIVATE "atomic")
+#endif()
+#set_property(TARGET randomx-benchmark PROPERTY POSITION_INDEPENDENT_CODE ON)
+#set_property(TARGET randomx-benchmark PROPERTY CXX_STANDARD 11)
+
+#target_include_directories(randomx PUBLIC src/)

@@ -26,6 +26,39 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+/*
+ * Protections are chosen from these bits, or-ed together
+ */
+#define	PROT_NONE	0x00	/* no permissions */
+#define	PROT_READ	0x01	/* pages can be read */
+#define	PROT_WRITE	0x02	/* pages can be written */
+#define	PROT_EXEC	0x04	/* pages can be executed */
+
+/*
+ * Flags contain sharing type and options.
+ * Sharing types; choose one.
+ */
+#define	MAP_SHARED	0x0001	/* share changes */
+#define	MAP_PRIVATE	0x0002	/* changes are private */
+
+/*
+ * Other flags
+ */
+#define	MAP_FIXED	0x0010	/* map addr must be exactly as requested */
+#define	__MAP_NOREPLACE	0x0800	/* fail if address not available */
+#define	MAP_ANON	0x1000	/* allocated from memory, swap space */
+#define	MAP_ANONYMOUS	MAP_ANON	/* alternate POSIX spelling */
+#define	__MAP_NOFAULT	0x2000
+#define	MAP_STACK	0x4000	/* mapping is used for a stack */
+#define	MAP_CONCEAL	0x8000	/* omit from dumps */
+
+#define	MAP_FLAGMASK	0xfff7
+
+#define MAP_FAILED	((void *)-1)
+
+#define MAP_HUGETLB 0x11223344
+#define MAP_POPULATE 0x11223344
+
 #if defined(_WIN32) || defined(__CYGWIN__)
 #include <windows.h>
 #else
@@ -42,7 +75,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # endif
 #endif
 #include <sys/types.h>
-#include <sys/mman.h>
+//#include <sys/mman.h>
 #include <errno.h>
 #ifndef MAP_ANONYMOUS
 #define MAP_ANONYMOUS MAP_ANON

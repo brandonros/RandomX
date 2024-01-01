@@ -51,7 +51,7 @@ namespace randomx {
 		void* operator new(size_t size) {
 			void* ptr = AlignedAllocator<CacheLineSize>::allocMemory(size);
 			if (ptr == nullptr)
-				throw std::bad_alloc();
+				//throw std::bad_alloc();
 			return ptr;
 		}
 		void operator delete(void* ptr) {

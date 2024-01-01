@@ -34,6 +34,10 @@ extern "C" {
 
 #include <stddef.h>
 
+void *  mmap(void *, size_t, int, int, int, off_t);
+int mprotect(void *, size_t, int);
+int munmap(void *, size_t);
+
 #define alignSize(pos, align) (((pos - 1) / align + 1) * align)
 
 void* allocMemoryPages(size_t);

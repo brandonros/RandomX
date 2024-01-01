@@ -42,7 +42,8 @@ namespace randomx {
 	class JitCompilerFallback {
 	public:
 		JitCompilerFallback() {
-			throw std::runtime_error("JIT compilation is not supported on this platform");
+			//throw std::runtime_error("JIT compilation is not supported on this platform");
+			// TODO
 		}
 		void generateProgram(Program&, ProgramConfiguration&) {
 
