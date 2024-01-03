@@ -37,7 +37,8 @@ namespace randomx {
 	exe_ ## x(ibc, pc, scratchpad, config); \
 	break;
 
-	void BytecodeMachine::executeInstruction(RANDOMX_EXE_ARGS) {
+	void BytecodeMachine::executeInstruction(InstructionByteCode& ibc, int& pc, uint8_t* scratchpad, ProgramConfiguration& config) {
+		printf("bytecode_machine: executeInstruction pc = %08x ibc.type = %s\n", pc, instructionTypeToString(ibc.type).c_str());
 		switch (ibc.type)
 		{
 			INSTR_CASE(IADD_RS)
@@ -79,6 +80,8 @@ namespace randomx {
 	}
 
 	void BytecodeMachine::compileInstruction(RANDOMX_GEN_ARGS) {
+		std::cout << "bytecode_machine: compileInstruction\n";
+		
 		int opcode = instr.opcode;
 
 		if (opcode < ceil_IADD_RS) {

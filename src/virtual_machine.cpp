@@ -70,6 +70,7 @@ namespace randomx {
 }
 
 void randomx_vm::initialize() {
+	std::cout << "virtual_machine: initialize\n";
 	store64(&reg.a[0].lo, randomx::getSmallPositiveFloatBits(program.getEntropy(0)));
 	store64(&reg.a[0].hi, randomx::getSmallPositiveFloatBits(program.getEntropy(1)));
 	store64(&reg.a[1].lo, randomx::getSmallPositiveFloatBits(program.getEntropy(2)));
@@ -104,6 +105,7 @@ namespace randomx {
 
 	template<class Allocator, bool softAes>
 	void VmBase<Allocator, softAes>::allocate() {
+		std::cout << "virtual_machine: allocate\n";
 		if (datasetPtr == nullptr)
 			throw std::invalid_argument("Cache/Dataset not set");
 		if (!softAes) { //if hardware AES is not supported, it's better to fail now than to return a ticking bomb
@@ -116,23 +118,27 @@ namespace randomx {
 
 	template<class Allocator, bool softAes>
 	void VmBase<Allocator, softAes>::getFinalResult(void* out, size_t outSize) {
+		std::cout << "virtual_machine: getFinalResult\n";
 		hashAes1Rx4<softAes>(scratchpad, ScratchpadSize, &reg.a);
 		blake2b(out, outSize, &reg, sizeof(RegisterFile), nullptr, 0);
 	}
 
 	template<class Allocator, bool softAes>
 	void VmBase<Allocator, softAes>::hashAndFill(void* out, size_t outSize, uint64_t *fill_state) {
+		std::cout << "virtual_machine: hashAndFill\n";
 		hashAndFillAes1Rx4<softAes>((void*) getScratchpad(), ScratchpadSize, &reg.a, fill_state);
 		blake2b(out, outSize, &reg, sizeof(RegisterFile), nullptr, 0);
 	}
 
 	template<class Allocator, bool softAes>
 	void VmBase<Allocator, softAes>::initScratchpad(void* seed) {
+		std::cout << "virtual_machine: initScratchpad\n";
 		fillAes1Rx4<softAes>(seed, ScratchpadSize, scratchpad);
 	}
 
 	template<class Allocator, bool softAes>
 	void VmBase<Allocator, softAes>::generateProgram(void* seed) {
+		std::cout << "virtual_machine: generateProgram\n";
 		fillAes4Rx4<softAes>(seed, sizeof(program), &program);
 	}
 

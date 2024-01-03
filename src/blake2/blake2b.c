@@ -309,6 +309,16 @@ int blake2b_final(blake2b_state *S, void *out, size_t outlen) {
 
 int blake2b(void *out, size_t outlen, const void *in, size_t inlen,
 	const void *key, size_t keylen) {
+	printf("blake2b: in = ");
+	for (int i = 0; i < inlen; ++i) {
+		printf("%02x", ((uint8_t*)in)[i]);
+	}
+	printf("key = ");
+	for (int i = 0; i < keylen; ++i) {
+		printf("%02x", ((uint8_t*)key)[i]);
+	}
+	printf("\n");
+
 	blake2b_state S;
 	int ret = -1;
 
@@ -340,6 +350,20 @@ int blake2b(void *out, size_t outlen, const void *in, size_t inlen,
 		goto fail;
 	}
 	ret = blake2b_final(&S, out, outlen);
+
+	printf("blake2b: in = ");
+	for (int i = 0; i < inlen; ++i) {
+		printf("%02x", ((uint8_t*)in)[i]);
+	}
+	printf("key = ");
+	for (int i = 0; i < keylen; ++i) {
+		printf("%02x", ((uint8_t*)key)[i]);
+	}
+	printf("out = ");
+	for (int i = 0; i < outlen; ++i) {
+		printf("%02x", ((uint8_t*)out)[i]);
+	}
+	printf("\n");
 
 fail:
 	//clear_internal_memory(&S, sizeof(S));

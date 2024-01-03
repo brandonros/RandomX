@@ -108,6 +108,7 @@ namespace randomx {
 	class BytecodeMachine {
 	public:
 		void beginCompilation(NativeRegisterFile& regFile) {
+			std::cout << "bytecode_machine: beginCompilation\n";
 			for (unsigned i = 0; i < RegistersCount; ++i) {
 				registerUsage[i] = -1;
 			}
@@ -115,6 +116,7 @@ namespace randomx {
 		}
 
 		void compileProgram(Program& program, InstructionByteCode bytecode[RANDOMX_PROGRAM_SIZE], NativeRegisterFile& regFile) {
+			std::cout << "bytecode_machine: compileProgram\n";
 			beginCompilation(regFile);
 			for (unsigned i = 0; i < RANDOMX_PROGRAM_SIZE; ++i) {
 				auto& instr = program(i);
@@ -124,6 +126,7 @@ namespace randomx {
 		}
 
 		static void executeBytecode(InstructionByteCode bytecode[RANDOMX_PROGRAM_SIZE], uint8_t* scratchpad, ProgramConfiguration& config) {
+			std::cout << "bytecode_machine: executeBytecode\n";
 			for (int pc = 0; pc < RANDOMX_PROGRAM_SIZE; ++pc) {
 				auto& ibc = bytecode[pc];
 				executeInstruction(ibc, pc, scratchpad, config);

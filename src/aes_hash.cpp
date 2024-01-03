@@ -27,6 +27,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include "soft_aes.h"
+#include <iostream>
 #include <cassert>
 
 //NOTE: The functions below were tuned for maximum performance
@@ -59,6 +60,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 template<bool softAes>
 void hashAes1Rx4(const void *input, size_t inputSize, void *hash) {
+	std::cout << "aes_hash: hashAes1Rx4\n";
+
 	assert(inputSize % 64 == 0);
 	const uint8_t* inptr = (uint8_t*)input;
 	const uint8_t* inputEnd = inptr + inputSize;
@@ -131,6 +134,7 @@ template void hashAes1Rx4<true>(const void *input, size_t inputSize, void *hash)
 */
 template<bool softAes>
 void fillAes1Rx4(void *state, size_t outputSize, void *buffer) {
+	std::cout << "aes_hash: fillAes1Rx4\n";
 	assert(outputSize % 64 == 0);
 	const uint8_t* outptr = (uint8_t*)buffer;
 	const uint8_t* outputEnd = outptr + outputSize;
@@ -186,6 +190,7 @@ template void fillAes1Rx4<false>(void *state, size_t outputSize, void *buffer);
 
 template<bool softAes>
 void fillAes4Rx4(void *state, size_t outputSize, void *buffer) {
+	std::cout << "aes_hash: fillAes4Rx4\n";
 	assert(outputSize % 64 == 0);
 	const uint8_t* outptr = (uint8_t*)buffer;
 	const uint8_t* outputEnd = outptr + outputSize;
@@ -242,6 +247,7 @@ template void fillAes4Rx4<false>(void *state, size_t outputSize, void *buffer);
 
 template<bool softAes>
 void hashAndFillAes1Rx4(void *scratchpad, size_t scratchpadSize, void *hash, void* fill_state) {
+	std::cout << "aes_hash: hashAndFillAes1Rx4\n";
 	uint8_t* scratchpadPtr = (uint8_t*)scratchpad;
 	const uint8_t* scratchpadEnd = scratchpadPtr + scratchpadSize;
 

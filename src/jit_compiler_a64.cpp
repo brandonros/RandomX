@@ -125,6 +125,8 @@ void JitCompilerA64::enableAll()
 
 void JitCompilerA64::generateProgram(Program& program, ProgramConfiguration& config)
 {
+	std::cout << "jit_compiler_a64: generateProgram\n";
+
 	uint32_t codePos = MainLoopBegin + 4;
 
 	// and w16, w10, ScratchpadL3Mask64

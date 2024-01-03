@@ -73,7 +73,7 @@ if(NOT ARCH)
 endif()
 
 if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE Release)
+  set(CMAKE_BUILD_TYPE Debug)
   message(STATUS "Setting default build type: ${CMAKE_BUILD_TYPE}")
 endif()
 
@@ -229,7 +229,7 @@ install(TARGETS randomx
   PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 add_executable(randomx-tests
-  src/tests/tests.cpp)
+  src/tests/api-example1.c)
 target_link_libraries(randomx-tests
   PRIVATE randomx)
 set_property(TARGET randomx-tests PROPERTY POSITION_INDEPENDENT_CODE ON)

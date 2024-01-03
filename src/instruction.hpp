@@ -72,6 +72,8 @@ namespace randomx {
 		NOP = 29,
 	};
 
+	std::string instructionTypeToString(InstructionType type);
+
 	class Instruction {
 	public:
 		uint32_t getImm32() const {

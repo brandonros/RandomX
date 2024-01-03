@@ -32,6 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * Daniel Dinu, Dmitry Khovratovich, Jean-Philippe Aumasson, and Samuel Neves
 */
 
+#include <stdio.h>
 #include <stdint.h>
 #include <string.h>
 #include <stdlib.h>
@@ -65,6 +66,8 @@ static void xor_block(block* dst, const block* src) {
   */
 static void fill_block(const block *prev_block, const block *ref_block,
 	block *next_block, int with_xor) {
+	printf("argon2_ref: fill_block\n");
+	
 	block blockR, block_tmp;
 	unsigned i;
 
@@ -109,6 +112,7 @@ static void fill_block(const block *prev_block, const block *ref_block,
 
 void randomx_argon2_fill_segment_ref(const argon2_instance_t *instance,
 	argon2_position_t position) {
+	printf("argon2_ref: randomx_argon2_fill_segment_ref\n");
 	block *ref_block = NULL, *curr_block = NULL;
 	block address_block, input_block, zero_block;
 	uint64_t pseudo_rand, ref_index, ref_lane;

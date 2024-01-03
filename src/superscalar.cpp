@@ -269,6 +269,8 @@ namespace randomx {
 			return name_;
 		}
 		const DecoderBuffer* fetchNext(SuperscalarInstructionType instrType, int cycle, int mulCount, Blake2Generator& gen) const {
+			printf("superscalar: fetchNext\n");
+
 			//If the current RandomX instruction is "IMULH", the next fetch configuration must be 3-3-10
 			//because the full 128-bit multiplication instruction is 3 bytes long and decodes to 2 uOPs on Intel CPUs.
 			//Intel CPUs can decode at most 4 uOPs per cycle, so this requires a 2-1-1 configuration for a total of 3 macro ops.
@@ -651,7 +653,7 @@ namespace randomx {
 	}
 
 	void generateSuperscalar(SuperscalarProgram& prog, Blake2Generator& gen) {
-
+		printf("superscalar: generateSuperscalar\n");
 		ExecutionPort::type portBusy[CYCLE_MAP_SIZE][3];
 		memset(portBusy, 0, sizeof(portBusy));
 		RegisterInfo registers[8];
@@ -854,6 +856,8 @@ namespace randomx {
 	}
 
 	void executeSuperscalar(int_reg_t(&r)[8], SuperscalarProgram& prog, std::vector<uint64_t> *reciprocals) {
+		printf("superscalar: executeSuperscalar\n");
+
 		for (unsigned j = 0; j < prog.getSize(); ++j) {
 			Instruction& instr = prog(j);
 			switch ((SuperscalarInstructionType)instr.opcode)

@@ -48,6 +48,7 @@ namespace randomx {
 
 	template<class Allocator, bool softAes, bool secureJit>
 	void CompiledVm<Allocator, softAes, secureJit>::run(void* seed) {
+		std::cout << "vm_compiled: run\n";
 		VmBase<Allocator, softAes>::generateProgram(seed);
 		randomx_vm::initialize();
 		if (secureJit) {
@@ -63,6 +64,7 @@ namespace randomx {
 
 	template<class Allocator, bool softAes, bool secureJit>
 	void CompiledVm<Allocator, softAes, secureJit>::execute() {
+		std::cout << "vm_compiled: execute\n";
 #ifdef __aarch64__
 		memcpy(reg.f, config.eMask, sizeof(config.eMask));
 #endif

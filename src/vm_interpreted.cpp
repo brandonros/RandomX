@@ -47,6 +47,7 @@ namespace randomx {
 
 	template<class Allocator, bool softAes>
 	void InterpretedVm<Allocator, softAes>::run(void* seed) {
+		std::cout << "vm_interpreted: run\n";
 		VmBase<Allocator, softAes>::generateProgram(seed);
 		randomx_vm::initialize();
 		execute();
@@ -54,7 +55,7 @@ namespace randomx {
 
 	template<class Allocator, bool softAes>
 	void InterpretedVm<Allocator, softAes>::execute() {
-
+		std::cout << "vm_interpreted: execute\n";
 		NativeRegisterFile nreg;
 
 		for(unsigned i = 0; i < RegisterCountFlt; ++i)
@@ -66,6 +67,8 @@ namespace randomx {
 		uint32_t spAddr1 = mem.ma;
 
 		for(unsigned ic = 0; ic < RANDOMX_PROGRAM_ITERATIONS; ++ic) {
+			printf("vm_interpreted: execute ic = %d / %d\n", ic, RANDOMX_PROGRAM_ITERATIONS);
+
 			uint64_t spMix = nreg.r[config.readReg0] ^ nreg.r[config.readReg1];
 			spAddr0 ^= spMix;
 			spAddr0 &= ScratchpadL3Mask64;
@@ -114,6 +117,7 @@ namespace randomx {
 
 	template<class Allocator, bool softAes>
 	void InterpretedVm<Allocator, softAes>::datasetRead(uint64_t address, int_reg_t(&r)[RegistersCount]) {
+		std::cout << "vm_interpreted: datasetRead\n";
 		uint64_t* datasetLine = (uint64_t*)(mem.memory + address);
 		for (int i = 0; i < RegistersCount; ++i)
 			r[i] ^= datasetLine[i];
@@ -121,6 +125,7 @@ namespace randomx {
 
 	template<class Allocator, bool softAes>
 	void InterpretedVm<Allocator, softAes>::datasetPrefetch(uint64_t address) {
+		std::cout << "vm_interpreted: datasetPrefetch\n";
 		rx_prefetch_nta(mem.memory + address);
 	}
 

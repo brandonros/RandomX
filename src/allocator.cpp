@@ -36,6 +36,7 @@ namespace randomx {
 
 	template<size_t alignment>
 	void* AlignedAllocator<alignment>::allocMemory(size_t count) {
+		printf("allocator: allocMemory\n");
 		void *mem = rx_aligned_alloc(count, alignment);
 		if (mem == nullptr)
 			throw std::bad_alloc();

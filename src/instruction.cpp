@@ -37,6 +37,42 @@ namespace randomx {
 		(this->*handler)(os);
 	}
 
+	std::string instructionTypeToString(InstructionType type) {
+		switch (type) {
+			case InstructionType::IADD_RS: return "IADD_RS";
+			case InstructionType::IADD_M: return "IADD_M";
+			case InstructionType::ISUB_R: return "ISUB_R";
+			case InstructionType::ISUB_M: return "ISUB_M";
+			case InstructionType::IMUL_R: return "IMUL_R";
+			case InstructionType::IMUL_M: return "IMUL_M";
+			case InstructionType::IMULH_R: return "IMULH_R";
+			case InstructionType::IMULH_M: return "IMULH_M";
+			case InstructionType::ISMULH_R: return "ISMULH_R";
+			case InstructionType::ISMULH_M: return "ISMULH_M";
+			case InstructionType::IMUL_RCP: return "IMUL_RCP";
+			case InstructionType::INEG_R: return "INEG_R";
+			case InstructionType::IXOR_R: return "IXOR_R";
+			case InstructionType::IXOR_M: return "IXOR_M";
+			case InstructionType::IROR_R: return "IROR_R";
+			case InstructionType::IROL_R: return "IROL_R";
+			case InstructionType::ISWAP_R: return "ISWAP_R";
+			case InstructionType::FSWAP_R: return "FSWAP_R";
+			case InstructionType::FADD_R: return "FADD_R";
+			case InstructionType::FADD_M: return "FADD_M";
+			case InstructionType::FSUB_R: return "FSUB_R";
+			case InstructionType::FSUB_M: return "FSUB_M";
+			case InstructionType::FSCAL_R: return "FSCAL_R";
+			case InstructionType::FMUL_R: return "FMUL_R";
+			case InstructionType::FDIV_M: return "FDIV_M";
+			case InstructionType::FSQRT_R: return "FSQRT_R";
+			case InstructionType::CBRANCH: return "CBRANCH";
+			case InstructionType::CFROUND: return "CFROUND";
+			case InstructionType::ISTORE: return "ISTORE";
+			case InstructionType::NOP: return "NOP";
+			default: return "Unknown";
+		}
+	}
+
 	void Instruction::genAddressReg(std::ostream& os, int srcIndex) const {
 		os << (getModMem() ? "L1" : "L2") << "[r" << srcIndex << std::showpos << (int32_t)getImm32() << std::noshowpos << "]";
 	}

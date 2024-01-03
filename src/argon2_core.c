@@ -88,6 +88,7 @@ static void store_block(void *output, const block *src) {
 uint32_t randomx_argon2_index_alpha(const argon2_instance_t *instance,
 	const argon2_position_t *position, uint32_t pseudo_rand,
 	int same_lane) {
+	printf("argon2_core: randomx_argon2_index_alpha\n");
 	/*
 	 * Pass 0:
 	 *      This lane : all already finished segments plus already constructed
@@ -176,6 +177,7 @@ static int fill_memory_blocks_st(argon2_instance_t *instance) {
 }
 
 int randomx_argon2_fill_memory_blocks(argon2_instance_t *instance) {
+	printf("argon2_core: randomx_argon2_fill_memory_blocks\n");
 	if (instance == NULL || instance->lanes == 0) {
 		return ARGON2_INCORRECT_PARAMETER;
 	}
@@ -299,6 +301,8 @@ int randomx_argon2_validate_inputs(const argon2_context *context) {
 }
 
 void rxa2_fill_first_blocks(uint8_t *blockhash, const argon2_instance_t *instance) {
+	printf("argon2_core: rxa2_fill_first_blocks\n");
+
 	uint32_t l;
 	/* Make the first and second block in each lane as G(H0||0||i) or
 	   G(H0||1||i) */
@@ -321,6 +325,8 @@ void rxa2_fill_first_blocks(uint8_t *blockhash, const argon2_instance_t *instanc
 }
 
 void rxa2_initial_hash(uint8_t *blockhash, argon2_context *context, argon2_type type) {
+	printf("argon2_core: rxa2_initial_hash\n");
+
 	blake2b_state BlakeHash;
 	uint8_t value[sizeof(uint32_t)];
 
@@ -383,6 +389,7 @@ void rxa2_initial_hash(uint8_t *blockhash, argon2_context *context, argon2_type 
 }
 
 int randomx_argon2_initialize(argon2_instance_t *instance, argon2_context *context) {
+	printf("argon2_core: randomx_argon2_initialize\n");
 	uint8_t blockhash[ARGON2_PREHASH_SEED_LENGTH];
 	int result = ARGON2_OK;
 

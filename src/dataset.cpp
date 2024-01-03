@@ -69,6 +69,8 @@ namespace randomx {
 	template void deallocCache<LargePageAllocator>(randomx_cache* cache);
 
 	void initCache(randomx_cache* cache, const void* key, size_t keySize) {
+		printf("dataset: initCache\n");
+
 		uint32_t memory_blocks, segment_length;
 		argon2_instance_t instance;
 		argon2_context context;
@@ -140,6 +142,7 @@ namespace randomx {
 	}
 
 	void initCacheCompile(randomx_cache* cache, const void* key, size_t keySize) {
+		printf("dataset: initCacheCompile\n");
 		initCache(cache, key, keySize);
 		cache->jit->enableWriting();
 		cache->jit->generateSuperscalarHash(cache->programs, cache->reciprocalCache);
@@ -162,6 +165,7 @@ namespace randomx {
 	}
 
 	void initDatasetItem(randomx_cache* cache, uint8_t* out, uint64_t itemNumber) {
+		printf("dataset: initDatasetItem\n");
 		int_reg_t rl[8];
 		uint8_t* mixBlock;
 		uint64_t registerValue = itemNumber;
@@ -190,6 +194,7 @@ namespace randomx {
 	}
 
 	void initDataset(randomx_cache* cache, uint8_t* dataset, uint32_t startItem, uint32_t endItem) {
+		printf("dataset: initDataset\n");
 		for (uint32_t itemNumber = startItem; itemNumber < endItem; ++itemNumber, dataset += CacheLineSize)
 			initDatasetItem(cache, dataset, itemNumber);
 	}
