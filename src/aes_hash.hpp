@@ -29,6 +29,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma once
 
 #include <cstddef>
+#include "panic.h"
 
 template<bool softAes>
 void hashAes1Rx4(const void *input, size_t inputSize, void *hash);

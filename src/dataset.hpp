@@ -51,7 +51,7 @@ struct randomx_cache {
 	randomx::DatasetInitFunc* datasetInit;
 	randomx::SuperscalarProgram programs[RANDOMX_CACHE_ACCESSES];
 	std::vector<uint64_t> reciprocalCache;
-	std::string cacheKey;
+	uint8_t cacheKey[RANDOMX_KEY_SIZE];
 	randomx_argon2_impl* argonImpl;
 
 	bool isInitialized() {

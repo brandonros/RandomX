@@ -31,8 +31,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <stddef.h>
 #include <stdint.h>
+#include "panic.h"
 
 #define RANDOMX_HASH_SIZE 32
+#define RANDOMX_KEY_SIZE 32
 #define RANDOMX_DATASET_ITEM_SIZE 64
 
 #ifndef RANDOMX_EXPORT

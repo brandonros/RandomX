@@ -225,8 +225,9 @@ namespace randomx {
 
 	JitCompilerX86::JitCompilerX86() {
 		code = (uint8_t*)allocMemoryPages(CodeSize);
-		if (code == nullptr)
-			throw std::runtime_error("allocMemoryPages");
+		if (code == nullptr) {
+			our_panic(8);
+		}
 		memcpy(code, codePrologue, prologueSize);
 		memcpy(code + epilogueOffset, codeEpilogue, epilogueSize);
 	}

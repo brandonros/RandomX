@@ -130,11 +130,12 @@ extern "C" {
 	void randomx_init_cache(randomx_cache *cache, const void *key, size_t keySize) {
 		assert(cache != nullptr);
 		assert(keySize == 0 || key != nullptr);
-		std::string cacheKey;
-		cacheKey.assign((const char *)key, keySize);
-		if (cache->cacheKey != cacheKey || !cache->isInitialized()) {
+		assert(keySize == RANDOMX_KEY_SIZE);
+		uint8_t cacheKey[RANDOMX_KEY_SIZE] = {0};
+		memcpy(cacheKey, key, keySize);
+		if (!cache->isInitialized()) {
 			cache->initialize(cache, key, keySize);
-			cache->cacheKey = cacheKey;
+			memcpy(cache->cacheKey, cacheKey, RANDOMX_KEY_SIZE);
 		}
 	}
 
@@ -322,7 +323,7 @@ extern "C" {
 
 			if(cache != nullptr) {
 				vm->setCache(cache);
-				vm->cacheKey = cache->cacheKey;
+				memcpy(vm->cacheKey, cache->cacheKey, RANDOMX_KEY_SIZE);
 			}
 
 			if(dataset != nullptr)
@@ -341,9 +342,9 @@ extern "C" {
 	void randomx_vm_set_cache(randomx_vm *machine, randomx_cache* cache) {
 		assert(machine != nullptr);
 		assert(cache != nullptr && cache->isInitialized());
-		if (machine->cacheKey != cache->cacheKey || machine->getMemory() != cache->memory) {
+		if (memcmp(machine->cacheKey, cache->cacheKey, RANDOMX_KEY_SIZE) != 0 || machine->getMemory() != cache->memory) {
 			machine->setCache(cache);
-			machine->cacheKey = cache->cacheKey;
+			memcpy(machine->cacheKey, cache->cacheKey, RANDOMX_KEY_SIZE);
 		}
 	}
 

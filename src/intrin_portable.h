@@ -30,6 +30,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <cstdint>
 #include "blake2/endian.h"
+#include "panic.h"
 
 constexpr int32_t unsigned32ToSigned2sCompl(uint32_t x) {
 	return (-1 == ~0) ? (int32_t)x : (x > INT32_MAX ? (-(int32_t)(UINT32_MAX - x) - 1) : (int32_t)x);
@@ -723,11 +724,11 @@ static const char* platformError = "Platform doesn't support hardware AES";
 #include <stdexcept>
 
 FORCE_INLINE rx_vec_i128 rx_aesenc_vec_i128(rx_vec_i128 v, rx_vec_i128 rkey) {
-	//throw std::runtime_error(platformError);
+	our_panic(2);
 }
 
 FORCE_INLINE rx_vec_i128 rx_aesdec_vec_i128(rx_vec_i128 v, rx_vec_i128 rkey) {
-	//throw std::runtime_error(platformError);
+	our_panic(3);
 }
 
 #define HAVE_AES 0

@@ -223,7 +223,7 @@ if(TARGET generate-asm)
   add_dependencies(randomx generate-asm)
 endif()
 
-set_property(TARGET randomx PROPERTY POSITION_INDEPENDENT_CODE ON)
+set_property(TARGET randomx PROPERTY POSITION_INDEPENDENT_CODE OFF)
 set_property(TARGET randomx PROPERTY CXX_STANDARD 11)
 set_property(TARGET randomx PROPERTY CXX_STANDARD_REQUIRED ON)
 set_property(TARGET randomx PROPERTY PUBLIC_HEADER src/randomx.h)

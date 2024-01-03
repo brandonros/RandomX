@@ -70,7 +70,7 @@ protected:
 	};
 	uint64_t datasetOffset;
 public:
-	std::string cacheKey;
+	uint8_t cacheKey[RANDOMX_KEY_SIZE];
 	alignas(16) uint64_t tempHash[8]; //8 64-bit values used to store intermediate data
 };
 

@@ -428,7 +428,7 @@ namespace randomx {
 		}
 		else {
 			//checked at compile time, but double-check here
-			throw std::runtime_error("Literal pool overflow");
+			our_panic(6);
 		}
 	}
 
@@ -597,8 +597,9 @@ namespace randomx {
 
 	JitCompilerRV64::JitCompilerRV64() {
 		state.code = (uint8_t*)allocMemoryPages(CodeSize);
-		if (state.code == nullptr)
-			throw std::runtime_error("allocMemoryPages");
+		if (state.code == nullptr) {
+			our_panic(7);
+		}
 		state.emitAt(LiteralPoolOffset, codeLiterals, sizeLiterals);
 		state.emitAt(LiteralPoolSize, codeDataInit, sizeDataInit + sizePrologue + sizeLoopBegin);
 		entryDataInit = state.code + LiteralPoolSize;

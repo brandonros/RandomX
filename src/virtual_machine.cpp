@@ -104,8 +104,9 @@ namespace randomx {
 
 	template<class Allocator, bool softAes>
 	void VmBase<Allocator, softAes>::allocate() {
-		if (datasetPtr == nullptr)
-			//throw std::invalid_argument("Cache/Dataset not set");
+		if (datasetPtr == nullptr) {
+			our_panic(9);
+		}
 		if (!softAes) { //if hardware AES is not supported, it's better to fail now than to return a ticking bomb
 			rx_vec_i128 tmp = rx_load_vec_i128((const rx_vec_i128*)&aesDummy);
 			tmp = rx_aesenc_vec_i128(tmp, tmp);
